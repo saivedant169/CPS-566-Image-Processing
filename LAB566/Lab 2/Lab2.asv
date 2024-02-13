@@ -1,0 +1,12 @@
+clear all;
+clear all;
+clc;
+
+w = imread("hello.png");
+
+figure;
+
+imshow(w);
+
+[em,emap] = imread("emu.tif");
+figure, imshow(em,)

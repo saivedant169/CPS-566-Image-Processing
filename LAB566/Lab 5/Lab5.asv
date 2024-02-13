@@ -1,0 +1,16 @@
+close all;
+clear all;
+clc;
+
+I = imread("udayton-1.jpg");
+imshow(I); title('original image');
+I_gray = rgb2gray(I);
+
+level = graythresh(I_gray);
+bw = im2bw(I_gray,level);
+figure; imshow(bw); title('binary image');
+
+a = bw';
+a = a(:);
+a = a';
+a = double(a);
