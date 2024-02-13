@@ -3,23 +3,49 @@ close all;
 clc;
 
 % Call the histogram_matching function
+matched_img = histogram_matching('image1.jpg', 'image2.jpg');
+
+% Save the matched image
+imwrite(uint8(matched_img), 'matched_image.jpg');
+
+% Read input images
 img1 = imread('image1.jpg');
 img2 = imread('image2.jpg');
-result_image = Prob1(img1, img2);
 
-% Display the original images and their histograms
-figure, imshow(img1);
-title('Original Image 1');
-figure, histogram(img1);
+% Compute histograms
+hist1 = compute_histogram(img1);
+hist2 = compute_histogram(img2);
+matched_hist = compute_histogram(matched_img);
+
+% Display histograms
+figure;
+subplot(3, 2, 1);
+imshow(img1);
+title('Image 1');
+subplot(3, 2, 2);
+imshow(img2);
+title('Image 2');
+subplot(3, 2, 3);
+bar(hist1);
 title('Histogram of Image 1');
-
-figure, imshow(img2);
-title('Original Image 2');
-figure, histogram(img2);
+subplot(3, 2, 4);
+bar(hist2);
 title('Histogram of Image 2');
+subplot(3, 2, 5);
+imshow(uint8(matched_img));
+title('Matched Image');
+subplot(3, 2, 6);
+bar(matched_hist);
+title('Histogram of Matched Image');
 
-% Display the result image and its histogram
-figure, imshow(result_image);
-title('Result Image');
-figure, histogram(result_image);
-title('Histogram of Result Image');
+function hist = compute_histogram(image)
+    hist = zeros(256, 1);
+    [rows, cols] = size(image);
+    
+    for i = 1:rows
+        for j = 1:cols
+            intensity = image(i, j);
+            hist(intensity + 1) = hist(intensity + 1) + 1;
+        end
+    end
+end

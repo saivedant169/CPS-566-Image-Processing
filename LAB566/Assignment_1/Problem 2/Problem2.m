@@ -1,20 +1,32 @@
-% Main file: main.m
+clear all;
+close all;
+clc;
 
 % Read the image
 img = imread('image.jpg');
 
 % Convert the image to grayscale
-grayImg = rgb2gray(img);
+img_gray = rgb2gray(img);
 
-% Apply the median filter
-windowSizeMedian = 3; % Change this to change the window size
-medianFilteredImg = myMedianFilter(double(grayImg), windowSizeMedian);
+% Define the window size for the filters
+window_size = 3;
 
-% Apply the adaptive filter
-windowSizeAdaptive = 3; % Change this to change the window size
-adaptiveFilteredImg = myAdaptiveFilter(double(grayImg), windowSizeAdaptive);
+% Perform median filtering
+img_median = medfilt2(img_gray, [window_size, window_size]);
+
+% Perform adaptive filtering
+img_adaptive = adapthisteq(img_gray, 'NumTiles', [window_size, window_size]);
 
 % Display the original and filtered images
-figure, imshow(grayImg), title('Original Grayscale Image');
-figure, imshow(uint8(medianFilteredImg)), title('Median Filtered Image');
-figure, imshow(uint8(adaptiveFilteredImg)), title('Adaptive Filtered Image');
+figure;
+subplot(1, 3, 1);
+imshow(img_gray);
+title('Original Grayscale Image');
+
+subplot(1, 3, 2);
+imshow(img_median);
+title('Median Filtered Image');
+
+subplot(1, 3, 3);
+imshow(img_adaptive);
+title('Adaptive Filtered Image');
