@@ -12,10 +12,10 @@ img_gray = rgb2gray(img);
 window_size = 3;
 
 % Perform median filtering
-img_median = median_filter(img_gray, window_size);
+img_median = Filter.median_filter(img_gray, window_size);
 
 % Perform adaptive filtering
-img_adaptive = adaptive_filter(img_gray, window_size);
+img_adaptive = Filter.adaptive_filter(img_gray, window_size);
 
 % Display the original and filtered images
 figure;
